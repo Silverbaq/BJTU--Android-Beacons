@@ -8,6 +8,8 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -30,7 +32,7 @@
             android:value="my_beacon.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="3" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
