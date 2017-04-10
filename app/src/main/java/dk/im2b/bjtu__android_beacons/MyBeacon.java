@@ -9,7 +9,7 @@ import com.orm.SugarRecord;
 public class MyBeacon extends SugarRecord {
 
     // Beacon information
-    private String proximityUUID;
+    private String uuid;
     private int major;
     private int minor;
     private int rssi;
@@ -24,7 +24,7 @@ public class MyBeacon extends SugarRecord {
     }
 
     public String getProximityUUID() {
-        return proximityUUID;
+        return uuid;
     }
 
     public MyBeacon(String proximityUUID, int major, int minor, int rssi, int mesuredPower, double latitude, double longitude){
@@ -38,7 +38,7 @@ public class MyBeacon extends SugarRecord {
     }
 
     public void setProximityUUID(String proximityUUID) {
-        this.proximityUUID = proximityUUID;
+        this.uuid = proximityUUID;
     }
 
     public int getMajor() {

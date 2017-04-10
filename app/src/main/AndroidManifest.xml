@@ -29,10 +29,10 @@
 
         <meta-data
             android:name="DATABASE"
-            android:value="my_beacon.db" />
+            android:value="my_beacon2.db" />
         <meta-data
             android:name="VERSION"
-            android:value="3" />
+            android:value="2" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -52,6 +52,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".DatabaseActivity"></activity>
     </application>
 
 </manifest>
