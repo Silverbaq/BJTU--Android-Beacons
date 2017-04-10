@@ -1,6 +1,6 @@
 # BJTU--Android-Beacons
 
-##Members
-David Leza
-Simon Carlson
-Steffen Mogensen
+## Members
+* David Leza
+* Simon Carlson
+* Steffen Mogensen
