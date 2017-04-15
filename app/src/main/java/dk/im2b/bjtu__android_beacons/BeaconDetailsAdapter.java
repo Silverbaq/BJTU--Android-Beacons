@@ -85,5 +85,8 @@ public class BeaconDetailsAdapter extends BaseAdapter {
         return Math.pow(10d, ((double) txPower - rssi) / (10 * 2));
     }
 
-
+    public void updateItems(List<Beacon> beacon){
+        this.beacon = beacon;
+        notifyDataSetChanged();
+    }
 }

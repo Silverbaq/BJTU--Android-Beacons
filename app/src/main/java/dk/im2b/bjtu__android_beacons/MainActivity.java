@@ -37,9 +37,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements OnMapReadyCallback, LocationListener,
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -76,7 +77,7 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
 
 
         // Make first beacon for the database
-        MyBeacon beacon = new MyBeacon("FIRST",0,0,0,0,0,0);
+        MyBeacon beacon = new MyBeacon("FIRST", 0, 0, 0, 0, 0, 0);
         beacon.save();
         // Remove it again
         MyBeacon.delete(beacon);
@@ -89,8 +90,12 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
         createLocationRequest();
 
-        // Beacon ListView && Listening for beacons
+        // Beacon ListView
         lvBeacon = (ListView) findViewById(R.id.activityMain_ListviewBeacon);
+        beaconAdapter = new BeaconDetailsAdapter(MainActivity.this, new ArrayList<Beacon>());
+        lvBeacon.setAdapter(beaconAdapter);
+
+        //  Listening for beacons
         beaconManager = new BeaconManager(MainActivity.this);
         region = new Region("ranged region", null, null, null);
 
@@ -98,16 +103,16 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
-                //if (!list.isEmpty()) {
-                    // Check if beacon is in list (have been registered)
-                    for (Beacon b : list) {
-                        Log.d(TAG, "beacon Nearby!!!! : " + b);
-                        checkDatabase(b);
-                    }
-                    beaconAdapter = new BeaconDetailsAdapter(MainActivity.this, list);
-                    lvBeacon.setAdapter(beaconAdapter);
+                // Check if beacon is in list (have been registered)
+                for (Beacon b : list) {
+                    Log.d(TAG, "beacon Nearby!!!! : " + b);
+                    checkDatabase(b);
+                }
+                // update beacon adapter
+                beaconAdapter.updateItems(list);
 
-                //}
+
+
             }
         });
 
@@ -134,7 +139,7 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
                             Condition.prop("major").eq(b.getMajor()))
                     .first();
 */
-            beacon = MyBeacon.find(MyBeacon.class, "uuid = ? and minor = ? and major = ?", b.getProximityUUID().toString(), ""+b.getMinor(), ""+b.getMajor()).get(0);
+            beacon = MyBeacon.find(MyBeacon.class, "uuid = ? and minor = ? and major = ?", b.getProximityUUID().toString(), "" + b.getMinor(), "" + b.getMajor()).get(0);
             //Toast.makeText(this, ""+beacon, Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
             beacon = null;
@@ -169,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
         for (MyBeacon beacon : beacons) {
             LatLng position = new LatLng(beacon.getLatitude(), beacon.getLongitude());
             mMap.addMarker(new MarkerOptions().position(position)
-                    .title("Distance: "+ String.format("%.2f", calcDistance(beacon.getRssi(), beacon.getMeasuredPower())) + " meters"));
+                    .title("Distance: " + String.format("%.2f", calcDistance(beacon.getRssi(), beacon.getMeasuredPower())) + " meters"));
         }
     }
 
