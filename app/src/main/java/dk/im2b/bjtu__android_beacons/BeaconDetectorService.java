@@ -86,6 +86,7 @@ public class BeaconDetectorService extends Service implements LocationListener,
                     Log.d(TAG, "beacon Nearby!!!! : " + b);
                     checkDatabase(b);
                 }
+                MyApp.beaconList = list;
             }
         });
 

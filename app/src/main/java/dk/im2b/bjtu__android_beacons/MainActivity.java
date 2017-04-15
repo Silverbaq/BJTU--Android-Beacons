@@ -49,10 +49,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Map
     private GoogleMap mMap;
 
-    // Beacon
-    private BeaconManager beaconManager;
-    private Region region;
-
     private String TAG = "MainActivity";
 
     ListView lvBeacon;
@@ -80,22 +76,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Beacon ListView
         lvBeacon = (ListView) findViewById(R.id.activityMain_ListviewBeacon);
-        beaconAdapter = new BeaconDetailsAdapter(MainActivity.this, new ArrayList<Beacon>());
+        beaconAdapter = new BeaconDetailsAdapter(MainActivity.this, MyApp.beaconList);
         lvBeacon.setAdapter(beaconAdapter);
-
-        //  Listening for beacons
-        beaconManager = new BeaconManager(MainActivity.this);
-        region = new Region("ranged region", null, null, null);
-
-        // iBeacon
-        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
-            @Override
-            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
-                // update beacon adapter
-                beaconAdapter.updateItems(list);
-            }
-        });
-        beaconManager.startRanging(region);
 
         // Start Service
         beaconDetectorServiceIntent = new Intent(getBaseContext(), BeaconDetectorService.class);
@@ -111,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onReceive(Context context, Intent intent) {
             updateBeaconsOnMap();
+            beaconAdapter.updateItems(MyApp.beaconList);
         }
     };
 
@@ -158,25 +141,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onResume();
 
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
-        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-            @Override
-            public void onServiceReady() {
-                beaconManager.startRanging(region);
-            }
-        });
-    }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        beaconManager.stopRanging(region);
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        beaconManager.disconnect();
         stopService(beaconDetectorServiceIntent);
     }
 
