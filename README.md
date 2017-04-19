@@ -7,9 +7,9 @@ The point of this app is to locate iBeacons, and place there position on google 
 * Steffen Mogensen
 
 ## Build
-* Clone repository
-* Open with Android Studio
-* Sync gradle
+1. Clone repository
+2. Open with Android Studio
+3. Sync gradle
 
 ## Minimum Android version
 API Level: 21. Android 5.0 (LOLLIPOP) <br />
