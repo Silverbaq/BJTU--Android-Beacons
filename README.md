@@ -12,8 +12,8 @@ The point of this app is to locate iBeacons, and place there position on google 
 * Sync gradle
 
 ## Minimum Android version
-API Level: 21. Android 5.0 (LOLLIPOP)
-There is nothing being used that makes it needed, so the min-version can be lowered.
+API Level: 21. Android 5.0 (LOLLIPOP) <br />
+There is nothing being used that makes it needed, so the min-version can be lowered. <br />
 
 ## Dependencies
 * SugarORM (https://satyan.github.io/sugar/)
